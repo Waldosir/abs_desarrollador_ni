@@ -1,0 +1,6 @@
+[submodule "ProyectoCPL_backend"]
+	path = ProyectoCPL_backend
+	url = https://github.com/Waldosir/ProyectoCPL_backend
+[submodule "ProyectoCPL_Frontend"]
+	path = ProyectoCPL_Frontend
+	url = https://github.com/Waldosir/ProyectoCPL_Frontend

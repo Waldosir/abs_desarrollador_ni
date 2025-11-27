@@ -1,0 +1,71 @@
+services:
+  database:
+    image: postgres:15-alpine
+    restart: always
+    container_name: database_medic
+    networks:
+      - red
+    environment:
+      - POSTGRES_DB=medicdb
+      - POSTGRES_PASSWORD=thisIsAStrongPassword123
+      - POSTGRES_USER=medicuser
+      - TZ=America/Mazatlan
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASS=${ADMIN_PASS}
+    volumes:
+      - data_medic:/var/lib/postgresql/data
+    #ports:
+      #- 5436:5432
+
+  backend:
+    build:
+      context: ProyectoCPL_backend
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: backend_medic
+    depends_on:
+      - database
+    networks:
+      - red
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/medicdb
+      - SPRING_DATASOURCE_USERNAME=medicuser
+      - SPRING_DATASOURCE_PASSWORD=thisIsAStrongPassword123
+      - SPRING.JPA.PROPERTIES.HIBERNATE.DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - TZ=America/Mazatlan
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASS=${ADMIN_PASS}
+    ports:
+      - 8050:8080
+
+
+  vite-app:
+    container_name: frontend-medic
+    build: 
+      context: ProyectoCPL_Frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_ADMIN_USER: ${ADMIN_USER}
+        VITE_ADMIN_PASS: ${ADMIN_PASS}
+    ports:
+      - "3000:3000" # Entras por el 8080, el contenedor escucha en el 3000
+    restart: always
+    networks:
+      - red
+    environment:
+      - VITE_ADMIN_USER=${ADMIN_USER}
+      - VITE_ADMIN_PASS=${ADMIN_PASS}
+    env_file:
+    - ProyectoCPL_Frontend/.env
+    - .env
+    depends_on:
+      - backend
+
+
+networks:
+  red:
+
+volumes:
+  data_medic:
+
