@@ -17,11 +17,11 @@ A su vez también se implementó una arquitectura de Microservicios: En este se 
 
 ### Diagrama DB
 
-![Diagrama de Arquitectura base de datos](docs/Diagrama_Coppel_DB.drawio.svg)
+![Diagrama de Arquitectura base de datos](docs/Diagrama_DB.drawio.svg)
 
 ## Diagrama Backend
 
-![Diagrama de Arquitectura backend](docs/Diagrama_Clases_Backend_Coppel.drawio.svg)
+![Diagrama de Arquitectura backend](docs/Diagrama_Clases_Backend.drawio.svg)
 
 **Nota:** Alergias fue una clase considerada a implementar que por cuestiones de tiempo no fue implementada.
 
@@ -45,3 +45,27 @@ Se usaron 3 tecnologías:
 - Base de datos: Postgresql
   - Esta base de datos relacionales no solo es de código libre y que puede ser utilizado sin pagar, sino que también es muy robusta, pudiendo guardar y procesar miles de millones de datos más rápidamente que otras bases de datos como MariaDB o MySQL.
   - Microsoft SQL es de pago, y MySQL también, por ello fueron descartadas.
+
+## Correr proyecto
+
+### Descargar proyecto con submodulos
+
+- Haz un clone del repositorio con todos los submodulos: `git clone --recurse-submodules https://github.com/Waldosir/abs_desarrollador_ni`
+
+### Correr en docker
+
+Es requerido docker para correr este proyecto
+
+En la raiz del proyecto ejecuta este comando: `docker compose -f docker-compose.yml up --build`
+
+Con ello tres servicios se inician: la base de datos postgresql 15, el backend java con spring boot y el front end vite react.
+
+Sustituir los .env_example en las carpetas ProyectoCPL_backend,ProyectoCPL_Frontend y en la raiz del proyecto y sustituir las variables de entorno.
+
+**Nota**: Este proyecto no funciona en local. Solo funciona en Docker.
+
+## URL Importantes
+
+Para entrar en el front es mediante este link: <http://localhost:3000/>
+
+Para enviar peticiones al backend es mediante este link: <http://localhost:8050>
